@@ -53,8 +53,8 @@ Note = Origin mimic do(
     note text = text
     note)
 
-  println = method(
-    "#{id} #{text}" println))
+  asIoke = method(
+    "[#{id}, \"#{text}\"]"))
 
 Command = Origin mimic do(
   recognize = method(arguments,
