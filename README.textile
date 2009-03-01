@@ -1,0 +1,22 @@
+Dnd is simple, console based task management program.
+
+It allows to add, delete and prioritize tasks, focusing on daily usage patterns. Although it's console based it is simple and fast to use.
+
+h2. Example Usage
+
+dnd add "Take a look at ticket #123"
+
+dnd list
+
+dnd delete 1
+
+dnd change 1 "Take a look at ticket #124"
+
+dnd top 2
+
+dnd queue 7
+
+dnd up 3
+
+dnd done 1
+
