@@ -1,5 +1,8 @@
 #!/usr/bin/env ioke
 
+System userHome = method(
+  Origin java:lang:System getProperty("user.home"))
+
 NoteCollection = Origin mimic do (
   
   [] = method(collection,
@@ -13,32 +16,44 @@ NoteCollection = Origin mimic do (
     saveAll)
 
   all = method(
-    self all = []
+    self all = List mimic
     readAll)
 
+  asIoke = method(
+    "NoteCollection[
+#{all map(to_ioke) join("\n")}
+    ]")
+    
   collectionFile = method(
-    unless(FileSystem exists?(file_name),
-      ; Create directory
-      ; Create empty file
-      )
-    file_name)
-
-  file_name = "~/.dnd/database.ik"
+    unless(FileSystem exists?(storageFullPath),
+      initializeCollection)
+    storageFullPath)
+    
+  initializeCollection = method(
+    unless(FileSystem exists?(storageDir),
+      FileSystem createDirectory!(storageDir))
+    FileSystem withOpenFile(storageFullPath, fn(f, f println(""))))
 
   maxId = method(
     all map(id) max)
 
   readAll = method(
-    use(collectionFile))
+    bind(
+      rescue(Condition Error Load, fn(c,
+        println "Could not load file: #{c}"))
+      use(collectionFile)))
 
   saveAll = method(
     FileSystem withOpenFile(file_name,
       all each(it, f << it to_ioke)))
 
-  to_ioke = method(
-    "NoteCollection[
-#{all map(to_ioke) join("\n")}
-    ]"))
+
+  storageDir = method(
+    "#{System userHome}/.dnd")
+
+  storageFileName = "database.ik"
+
+  storageFullPath = method(storageDir + "/" + storageFileName))
 
 Note = Origin mimic do(
 
@@ -46,28 +61,43 @@ Note = Origin mimic do(
     note = self mimic(text)
     all << note
     note)
+
+  asIoke = method(
+    "[#{id}, \"#{text}\"]")
+    
+  asText = method(
+    "#{id}:\t #{text}")
     
   build = method(id, text,
     note = mimic
     note id = id
     note text = text
-    note)
-
-  asIoke = method(
-    "[#{id}, \"#{text}\"]"))
+    note))
 
 Command = Origin mimic do(
-  recognize = method(arguments,
-    case(arguments first,
-      "add", add(arguments second),
-      "list", list
-      ))
   add = method(text,
     Note add(text))
+    
+  displayHelp = method(
+    "Use one of the following commands:
+add  - add new note
+help - prints this help
+list - lists notes" println)
+
+  init = method(
+    NoteCollection initializeCollection)
 
   list = method(
-    Note each(println))
+    NoteCollection all each(asText println))
+
+  recognize = method(arguments,
+    if(arguments empty?, displayHelp,
+      case(arguments first,
+        "add", add(arguments second),
+        "init", init
+        "list", list
+        )))
 )
 
-argv = System programArguments
+Command mimic recognize(System programArguments)
 
