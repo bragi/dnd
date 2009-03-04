@@ -60,7 +60,7 @@ NoteCollection = Origin mimic do (
   )
 
   maxId = method(
-    all map(id) max
+    all map(id toRational) max || 0
   )
 
   saveAll = method(
