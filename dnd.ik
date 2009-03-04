@@ -47,7 +47,9 @@ NoteCollection = Origin mimic do (
   )
 
   all = method(
-    self all = Database all
+    self all = Database all map(entry,
+      Note build(entry first, entry second)
+    )
   )
 
   maxId = method(
