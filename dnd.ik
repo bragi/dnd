@@ -10,6 +10,12 @@ Database = Origin mimic do(
       List mimic
     )
   )
+  
+  createDirectoryIfNeeded = method(
+    unless(FileSystem exists?(storageDir),
+      FileSystem createDirectory!(storageDir)
+    )
+  )
     
   databaseExists? = method(
     FileSystem exists?(storageFullPath)
@@ -40,10 +46,11 @@ Database = Origin mimic do(
 NoteCollection = Origin mimic do (
   
   add = method(note,
-    id = maxId
+    id = maxId + 1
     note id = id
     all << note
     saveAll
+    note
   )
 
   all = method(
@@ -63,12 +70,6 @@ NoteCollection = Origin mimic do (
 
 Note = Origin mimic do(
 
-  add = method(text,
-    note = self mimic(text)
-    all << note
-    note
-  )
-
   asCsv = method(separator ",",
     [id, text] join(separator)
   )
@@ -83,11 +84,21 @@ Note = Origin mimic do(
     note text = text
     note
   )
+  
+  initialize = method(text nil,
+    self text = text
+    self
+  )
+  
+  save = method(
+    NoteCollection add(self)
+  )
 )
 
 Command = Origin mimic do(
   add = method(text,
-    Note add(text)
+    note = Note mimic(text) save
+    note asText println
   )
     
   displayHelp = method(
