@@ -66,8 +66,8 @@ list - lists notes" println
 
 
 Commands = CommandController mimic do(
-  add = method(text,
-    note = Note mimic(text) save
+  add = method(arguments,
+    note = Note mimic(arguments first) save
     note toText println
   )
   
@@ -76,7 +76,7 @@ Commands = CommandController mimic do(
   )
 
   list = method(
-    NoteCollection all each(asText println)
+    NoteCollection all each(toText println)
   )
 
   pass = macro(
