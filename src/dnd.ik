@@ -18,6 +18,10 @@ NoteCollection = Origin mimic do (
       Note build(*entry)
     )
   )
+  
+  created = method(
+    all select (state == "created")
+  )
 
   maxId = method(
     all map(id toRational) max || 0
@@ -78,7 +82,7 @@ Commands = CommandController mimic do(
   )
 
   list = method(
-    NoteCollection all each(toText println)
+    NoteCollection created each(toText println)
   )
 
   pass = macro(
