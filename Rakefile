@@ -1,4 +1,4 @@
 desc "Runs tests"
 task :test do
-  exec "ispec -I src test"
+  exec "ioke -I src `which ispec` test"
 end
