@@ -26,7 +26,7 @@ Database = Origin mimic do(
     createDirectoryIfNeeded
     FileSystem withOpenFile(storageFullPath, 
       fn(f,
-        f print(collection map(asCsv("\0")) join("\1"))
+        f print(collection map(toDatabase("\0")) join("\1"))
       )
     )
   )

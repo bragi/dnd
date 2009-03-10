@@ -15,7 +15,7 @@ NoteCollection = Origin mimic do (
 
   all = method(
     self all = Database all map(entry,
-      Note build(entry first, entry second)
+      Note build(*entry)
     )
   )
 
@@ -30,23 +30,25 @@ NoteCollection = Origin mimic do (
 
 Note = Origin mimic do(
 
-  asCsv = method(separator ",",
-    [id, text] join(separator)
+  toDatabase = method(separator ",",
+    [id, text, state] join(separator)
   )
     
   toText = method(
-    "#{id}:\t #{text}"
+    "#{id}:\t #{text}\t (#{state})"
   )
     
-  build = method(id, text,
+  build = method(id, text, state,
     note = mimic
     note id = id
     note text = text
+    note state = state
     note
   )
   
   initialize = method(text nil,
     self text = text
+    self state = "created"
     self
   )
   
