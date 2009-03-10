@@ -22,6 +22,10 @@ NoteCollection = Origin mimic do (
   created = method(
     all select (state == "created")
   )
+  
+  find = method(findId,
+    note = all select(id == findId) first
+  )
 
   maxId = method(
     all map(id toRational) max || 0
@@ -50,6 +54,11 @@ Note = Origin mimic do(
     note
   )
   
+  delete = method(
+    self state = "deleted"
+    NoteCollection saveAll
+  )
+  
   initialize = method(text nil,
     self text = text
     self state = "created"
@@ -64,9 +73,10 @@ Note = Origin mimic do(
 Help = Origin mimic do(
   println = method(
     "Use one of the following commands:
-add  - add new note
-help - prints this help
-list - lists notes" println
+add    - add new note
+delete - deletes existing note
+help   - prints this help
+list   - lists notes" println
   )
 )
 
@@ -75,6 +85,15 @@ Commands = CommandController mimic do(
   add = method(arguments,
     note = Note mimic(arguments first) save
     note toText println
+  )
+  
+  delete = method(arguments,
+    note = NoteCollection find(arguments first)
+    if(note,
+      note delete
+      note toText,
+      
+      "Could not find note #{arguments first}" ) println
   )
   
   help = method(
