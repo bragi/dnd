@@ -15,23 +15,18 @@ Database = Origin mimic do(
   )
     
   databaseExists? = method(
-    if(FileSystem exists?(storageFullPath),
-      "Reading database" println
-      true,
-      "No database" println
-      false
-    )
+    FileSystem exists?(storageFullPath)
   )
     
   readDatabase = method(
-    FileSystem readFully(storageFullPath) split("\n") map(split("\0"))
+    FileSystem readFully(storageFullPath) split("\1") map(split("\0"))
   )
     
   save = method(collection,
     createDirectoryIfNeeded
     FileSystem withOpenFile(storageFullPath, 
       fn(f,
-        f print(collection map(asCsv(";")) join("\0"))
+        f print(collection map(asCsv("\0")) join("\1"))
       )
     )
   )

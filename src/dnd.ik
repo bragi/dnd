@@ -1,6 +1,7 @@
 #!/usr/bin/env ioke
 
 use("database")
+use("command_controller")
 
 NoteCollection = Origin mimic do (
   
@@ -64,14 +65,12 @@ list - lists notes" println
 )
 
 
-Command = Origin mimic do(
+Commands = CommandController mimic do(
   add = method(text,
     note = Note mimic(text) save
     note toText println
   )
   
-  defaultCommand = method(help)
-    
   help = method(
     Help println
   )
@@ -80,17 +79,10 @@ Command = Origin mimic do(
     NoteCollection all each(asText println)
   )
 
-  route = method(arguments,
-    case(arguments length,
-      0, defaultCommand,
-      1, send(arguments first),
-      else, send(arguments first, arguments rest))
-  )
-  
   pass = macro(
     "Unknown command #{call message name}" println
     help
   )
 )
 
-Command mimic route(System programArguments)
+Commands mimic route(System programArguments)
