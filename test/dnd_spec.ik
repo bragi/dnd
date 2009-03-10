@@ -1,3 +1,4 @@
+use("ispec")
 use("dnd")
 
 describe(Note,
@@ -7,15 +8,9 @@ describe(Note,
   it("should have text when built",
     Note build(3, "Hello") text should == "Hello")
   
-  it("should have ioke representation",
-    Note build(3, "Hello") asIoke should == "[3, \"Hello\"]")
-  
   it("should have text representation",
-    Note build(3, "Hello") asText should == "3:\t Hello"))
+    Note build(3, "Hello") toText should == "3:\t Hello"))
     
-describe(NoteCollection,
-  it("should have ioke representation",
-    ))
 
 describe(Command,
   it("should recognize add command",

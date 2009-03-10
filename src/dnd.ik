@@ -1,47 +1,6 @@
 #!/usr/bin/env ioke
 
-System userHome = method(
-  Origin java:lang:System getProperty("user.home"))
-  
-Database = Origin mimic do(
-  all = method(
-    self all = if(databaseExists?,
-      readDatabase,
-      List mimic
-    )
-  )
-  
-  createDirectoryIfNeeded = method(
-    unless(FileSystem exists?(storageDir),
-      FileSystem createDirectory!(storageDir)
-    )
-  )
-    
-  databaseExists? = method(
-    FileSystem exists?(storageFullPath)
-  )
-    
-  readDatabase = method(
-    FileSystem readFully(storageFullPath) split("\n") map(split(";"))
-  )
-    
-  save = method(collection,
-    createDirectoryIfNeeded
-    FileSystem withOpenFile(storageFullPath, 
-      fn(f,
-        f print(collection map(asCsv(";")) join("\n"))
-      )
-    )
-  )
-
-  storageDir = method(
-    "#{System userHome}/.dnd"
-  )
-
-  storageFileName = "database"
-
-  storageFullPath = method(storageDir + "/" + storageFileName)
-)
+use("database")
 
 NoteCollection = Origin mimic do (
   
@@ -74,7 +33,7 @@ Note = Origin mimic do(
     [id, text] join(separator)
   )
     
-  asText = method(
+  toText = method(
     "#{id}:\t #{text}"
   )
     
@@ -95,31 +54,43 @@ Note = Origin mimic do(
   )
 )
 
-Command = Origin mimic do(
-  add = method(text,
-    note = Note mimic(text) save
-    note asText println
-  )
-    
-  displayHelp = method(
+Help = Origin mimic do(
+  println = method(
     "Use one of the following commands:
 add  - add new note
 help - prints this help
 list - lists notes" println
+  )
+)
+
+
+Command = Origin mimic do(
+  add = method(text,
+    note = Note mimic(text) save
+    note toText println
+  )
+  
+  defaultCommand = method(help)
+    
+  help = method(
+    Help println
   )
 
   list = method(
     NoteCollection all each(asText println)
   )
 
-  recognize = method(arguments,
-    if(arguments empty?, displayHelp,
-      case(arguments first,
-        "add", add(arguments second),
-        "list", list
-      )
-    )
+  route = method(arguments,
+    case(arguments length,
+      0, defaultCommand,
+      1, send(arguments first),
+      else, send(arguments first, arguments rest))
+  )
+  
+  pass = macro(
+    "Unknown command #{call message name}" println
+    help
   )
 )
 
-Command mimic recognize(System programArguments)
+Command mimic route(System programArguments)
