@@ -1,5 +1,3 @@
-use("command_controller")
-
 ListController = CommandController mimic do(
   viewCollection = method(collection, collection each(toText println))
   
