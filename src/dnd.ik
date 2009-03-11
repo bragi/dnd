@@ -2,6 +2,7 @@
 
 use("database")
 use("command_controller")
+use("list_controller")
 
 NoteCollection = Origin mimic do (
   
@@ -82,6 +83,7 @@ list   - lists notes" println
 
 
 Commands = CommandController mimic do(
+
   add = method(arguments,
     note = Note mimic(arguments first) save
     note toText println
@@ -96,13 +98,12 @@ Commands = CommandController mimic do(
       "Could not find note #{arguments first}" ) println
   )
   
-  help = method(
+  help = method(arguments,
     Help println
   )
-
-  list = method(
-    NoteCollection created each(toText println)
-  )
+  
+  list = method(arguments,
+    ListController route(arguments))
 
   pass = macro(
     "Unknown command #{call message name}" println
