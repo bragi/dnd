@@ -1,18 +1,19 @@
 Note = Origin mimic do(
 
   toDatabase = method(separator ",",
-    [id, text, state] join(separator)
+    [id, text, state, tag] join(separator)
   )
     
   toText = method(
-    "#{id}:\t #{text}\t (#{state})"
+    "#{id}:\t #{text}\t (#{tag}, #{state})"
   )
     
-  build = method(id, text, state,
+  build = method(id, text, state, tag "inbox",
     note = mimic
     note id = id
     note text = text
     note state = state
+    note tag = tag
     note
   )
   
@@ -21,8 +22,9 @@ Note = Origin mimic do(
     NoteCollection saveAll
   )
   
-  initialize = method(text nil,
+  initialize = method(text nil, tag "inbox",
     self text = text
+    self tag = tag
     self state = "created"
     self
   )

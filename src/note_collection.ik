@@ -1,5 +1,4 @@
-NoteCollection = Origin mimic do (
-  
+NoteCollection = Origin mimic do(
   add = method(note,
     id = maxId + 1
     note id = id

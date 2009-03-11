@@ -1,7 +1,7 @@
 DndController = CommandController mimic do(
 
   add = method(arguments,
-    note = Note mimic(arguments first) save
+    note = Note mimic(*arguments) save
     note toText println
   )
   
