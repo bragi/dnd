@@ -22,6 +22,11 @@ Note = Origin mimic do(
     NoteCollection saveAll
   )
   
+  done =  method(
+    self state = "done"
+    NoteCollection saveAll
+  )
+  
   initialize = method(text nil, tag "inbox",
     self text = text
     self tag = tag

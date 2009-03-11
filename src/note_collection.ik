@@ -21,6 +21,10 @@ NoteCollection = Origin mimic do(
     all select (state == "deleted")
   )
   
+  done = method(
+    all select (state == "done")
+  )
+
   find = method(findId,
     note = all select(id == findId) first
   )

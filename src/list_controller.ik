@@ -8,6 +8,8 @@ ListController = CommandController mimic do(
   defaultCommand = method(arguments, created(arguments))
   
   deleted = method(arguments, viewCollection(NoteCollection deleted))
+  
+  done = method(arguments, viewCollection(NoteCollection done))
 
   pass = method(arguments,
     created(arguments)

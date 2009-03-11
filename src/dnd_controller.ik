@@ -14,6 +14,15 @@ DndController = CommandController mimic do(
       "Could not find note #{arguments first}" ) println
   )
   
+  done = method(arguments,
+    note = NoteCollection find(arguments first)
+    if(note,
+      note done
+      note toText,
+      
+      "Could not find note #{arguments first}" ) println
+  )
+  
   help = method(arguments,
     Help println
   )
