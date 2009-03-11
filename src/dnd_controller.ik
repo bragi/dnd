@@ -8,7 +8,7 @@ DndController = CommandController mimic do(
   delete = method(arguments,
     note = NoteCollection find(arguments first)
     if(note,
-      note delete
+      note delete!
       note toText,
       
       "Could not find note #{arguments first}" ) println
@@ -17,7 +17,7 @@ DndController = CommandController mimic do(
   done = method(arguments,
     note = NoteCollection find(arguments first)
     if(note,
-      note done
+      note do!
       note toText,
       
       "Could not find note #{arguments first}" ) println
@@ -33,5 +33,14 @@ DndController = CommandController mimic do(
   pass = macro(
     "Unknown command #{call message name}" println
     help
+  )
+  
+  take = method(arguments,
+    note = NoteCollection find(arguments first)
+    if(note,
+      note take!
+      note toText,
+      
+      "Could not find note #{arguments first}" ) println
   )
 )

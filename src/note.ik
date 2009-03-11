@@ -17,12 +17,12 @@ Note = Origin mimic do(
     note
   )
   
-  delete = method(
+  delete! = method(
     self state = "deleted"
     NoteCollection saveAll
   )
   
-  done =  method(
+  do! = method(
     self state = "done"
     NoteCollection saveAll
   )
@@ -36,5 +36,10 @@ Note = Origin mimic do(
   
   save = method(
     NoteCollection add(self)
+  )
+  
+  take! = method(
+    self state = "taken"
+    NoteCollection saveAll
   )
 )

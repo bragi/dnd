@@ -28,7 +28,7 @@ NoteCollection = Origin mimic do(
   find = method(findId,
     note = all select(id == findId) first
   )
-
+  
   maxId = method(
     all map(id toRational) max || 0
   )
