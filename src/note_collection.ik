@@ -8,14 +8,16 @@ NoteCollection = Origin mimic do(
   )
 
   all = method(
-    self all = Database all map(entry,
-      Note build(*entry)
+    self all = database all map(entry,
+      Note mimic(* entry toDict)
     )
   )
   
   created = method(
     all select (state == "created")
   )
+  
+  database = method(Database mimic(Note attributes))
   
   deleted = method(
     all select (state == "deleted")

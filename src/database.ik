@@ -5,7 +5,7 @@ Database = Origin mimic do(
     self all = if(databaseExists?,
       readDatabase,
       List mimic
-    )
+    ) map(data, Entry mimic(columns, data))
   )
   
   createDirectoryIfNeeded = method(
@@ -16,6 +16,10 @@ Database = Origin mimic do(
     
   databaseExists? = method(
     FileSystem exists?(storageFullPath)
+  )
+  
+  initialize = method(columns,
+    self columns = columns
   )
     
   readDatabase = method(
@@ -38,4 +42,15 @@ Database = Origin mimic do(
   storageFileName = "database"
 
   storageFullPath = method(storageDir + "/" + storageFileName)
+)
+
+Database Entry = Origin mimic do(
+  initialize = method(columns, data,
+    self columns = columns
+    self data = data
+  )
+  
+  toDict = method(
+    {}() addKeysAndValues(columns, data)
+  )
 )
