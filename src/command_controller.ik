@@ -1,5 +1,5 @@
 CommandController = Origin mimic do(
-  defaultCommand = method()
+  defaultCommand = macro(raise(CommandController Error UnknownCommand mimic))
   
   route = method(arguments,
     if(arguments length == 0,
@@ -8,3 +8,6 @@ CommandController = Origin mimic do(
     )
   )
 )
+
+CommandController Error = Origin mimic
+CommandController Error UnknownCommand = CommandController Error mimic

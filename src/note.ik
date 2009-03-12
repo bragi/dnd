@@ -1,5 +1,5 @@
 Note = Origin mimic do(
-  attributes = [:id, :text, :tag, :state]
+  attributes = [:id, :text, :state, :tag]
 
   toDatabase = method(separator ",",
     [id, text, state, tag] join(separator)
