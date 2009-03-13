@@ -6,6 +6,10 @@ NoteCollection = Origin mimic do(
     saveAll
     note
   )
+  
+  active = method(
+    all reject(note, ["deleted", "done"] include?(note state))
+  )
 
   all = method(
     self all = database all map(entry,
