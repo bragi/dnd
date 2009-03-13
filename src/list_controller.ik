@@ -11,7 +11,8 @@ ListController = CommandController mimic do(
   
   done = method(arguments, viewCollection(NoteCollection done))
 
-  pass = method(arguments,
-    created(arguments)
+  pass = macro(
+    "Unknown list #{call message name}" println
+    Help println
   )
 )
