@@ -8,15 +8,16 @@ dnd add "Take a look at ticket #123"
 
 dnd list
 
+dnd done 1
+
 dnd delete 1
 
 dnd change 1 "Take a look at ticket #124"
 
-dnd top 2
+dnd take 2
 
 dnd queue 7
 
 dnd up 3
 
-dnd done 1
 
