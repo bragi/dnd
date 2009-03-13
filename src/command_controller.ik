@@ -9,5 +9,5 @@ CommandController = Origin mimic do(
   )
 )
 
-CommandController Error = Origin mimic
+CommandController Error = Condition Error mimic
 CommandController Error UnknownCommand = CommandController Error mimic
