@@ -1,3 +1,0 @@
-Command - represents a single command from command line (shell later on), parses it and provides in coherent form
-
-Note - keeps data for a note, knows how to manage (load, store) notes
