@@ -1,4 +1,10 @@
-NoteCollection = Origin mimic do(
+NoteCollection = Origin mimic 
+
+NoteCollection do(
+  selectByState = method(
+    macro(all select(state == call message name))
+  )
+
   add = method(note,
     id = maxId + 1
     note id = id
@@ -17,20 +23,11 @@ NoteCollection = Origin mimic do(
     )
   )
   
-  created = method(
-    all select (state == "created")
+  [:created, :deleted, :done] each(state,
+    NoteCollection cell(state)= selectByState
   )
-  
   database = method(Database mimic(Note attributes))
   
-  deleted = method(
-    all select (state == "deleted")
-  )
-  
-  done = method(
-    all select (state == "done")
-  )
-
   find = method(findId,
     note = all select(id == findId) first
   )
@@ -42,4 +39,5 @@ NoteCollection = Origin mimic do(
   saveAll = method(
     Database save(all)
   )
+  
 )
