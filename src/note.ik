@@ -9,13 +9,13 @@ Note = Origin mimic do(
     "#{id}:\t #{text}\t (#{tag}, #{state})"
   )
     
-  delete! = method(
+  delete = method(
     self state = "deleted"
     NoteCollection saveAll
   )
   
-  finish! = method(
-    self state = "finished"
+  done = method(
+    self state = "done"
     NoteCollection saveAll
   )
   
@@ -30,7 +30,7 @@ Note = Origin mimic do(
     NoteCollection add(self)
   )
   
-  take! = method(
+  take = method(
     self state = "taken"
     NoteCollection saveAll
   )
