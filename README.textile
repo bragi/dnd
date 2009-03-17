@@ -4,20 +4,71 @@ It allows to add, delete and prioritize tasks, focusing on daily usage patterns.
 
 h2. Example Usage
 
+h3. Implemented
+
+Adding new ticket (will end up in "inbox"):
+
+<code>
 dnd add "Take a look at ticket #123"
+</code>
 
+Adding new ticket to tag "work":
+
+<code>
+dnd add "Take a look at ticket #123" work
+</code>
+
+Listing existing, outstanding notes:
+
+<code>
 dnd list
+</code>
 
+Listing done notes:
+
+<code>
+dnd list done
+</code>
+
+Marking note as done:
+
+<code>
 dnd done 1
+</code>
 
+Deleting note:
+
+<code>
 dnd delete 1
+</code>
+
+Marging note as next to do:
+
+<code>
+dnd take 2
+</code>
+
+Moving note to "work" tag:
+
+<code>
+dnd move 2 work
+</code>
+
+h3. TODO
 
 dnd change 1 "Take a look at ticket #124"
-
-dnd take 2
 
 dnd queue 7
 
 dnd up 3
 
+h2. How to Get?
 
+<code>
+  git clone git://github.com/bragi/dnd.git
+</code>
+
+h2. Links
+
+* Home page: http://github.com/bragi/dnd
+* Bugs, ideas, suggestions: http://bragi.lighthouseapp.com/projects/27511-dnd
