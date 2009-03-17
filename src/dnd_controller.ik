@@ -29,6 +29,16 @@ DndController = CommandController mimic do(
   
   list = method(arguments,
     ListController route(arguments))
+    
+  move = method(arguments,
+    note = NoteCollection find(arguments first)
+    if(note,
+      note tag = arguments second
+      note save
+      note toText,
+      
+      "Could not find note #{arguments first}" ) println
+  )
 
   pass = macro(
     "Unknown command #{call message name}" println

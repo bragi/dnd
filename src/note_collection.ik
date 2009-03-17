@@ -19,7 +19,7 @@ NoteCollection do(
 
   all = method(
     self all = database all map(entry,
-      Note mimic(* entry toDict)
+      Note mimic(* entry toDict merge(savedRecord: true))
     )
   )
   
@@ -29,7 +29,7 @@ NoteCollection do(
   database = method(Database mimic(Note attributes))
   
   find = method(findId,
-    note = all select(id == findId) first
+    all select(id == findId) first
   )
   
   maxId = method(
