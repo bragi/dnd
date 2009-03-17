@@ -51,6 +51,6 @@ Database Entry = Origin mimic do(
   )
   
   toDict = method(
-    {}() addKeysAndValues(columns, data)
+    {}() addKeysAndValues(columns, data) merge(savedRecord: true)
   )
 )

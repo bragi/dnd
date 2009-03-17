@@ -1,4 +1,5 @@
 use("ispec")
+use("database")
 use("note")
 
 describe(Note,
@@ -23,5 +24,8 @@ describe(Note,
       note text should == "text"
     )
     
+    it("is a saved record",
+      Note mimic(savedRecord: true) savedRecord should be true
+    )
   )
 )

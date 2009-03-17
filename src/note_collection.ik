@@ -19,7 +19,7 @@ NoteCollection do(
 
   all = method(
     self all = database all map(entry,
-      Note mimic(* entry toDict merge(savedRecord: true))
+      Note mimic(* entry toDict)
     )
   )
   
@@ -39,5 +39,4 @@ NoteCollection do(
   saveAll = method(
     Database save(all)
   )
-  
 )

@@ -1,5 +1,5 @@
 Note = Origin mimic do(
-  attributes = [:id, :text, :state, :tag]
+  attributes = [:id, :text, :state, :tag, :savedRecord]
   
   updateAttributeMethod = method(attribute, value,
     lecro(
@@ -17,13 +17,12 @@ Note = Origin mimic do(
   
   done = updateStateMethod("done")
   
-  initialize = method(+:attributes,
-    self state = "created"
-    self tag = "inbox"
-    self savedRecord = false
+  initialize = method(+:newAttributes,
     self attributes each(attribute,
-      self cell(attribute) = attributes[attribute]
+      self cell(attribute) = newAttributes[attribute]
     )
+    self state ||= "created"
+    self tag ||= "inbox"
   )
   
   save = method(
