@@ -2,29 +2,29 @@ DndController = CommandController mimic do(
 
   add = method(arguments,
     note = Note mimic(text: arguments first, tag: arguments second) save
-    note toText println
+    note
   )
   
   delete = method(arguments,
     note = NoteCollection find(arguments first)
     if(note,
       note delete
-      note toText,
+      note,
       
-      "Could not find note #{arguments first}" ) println
+      "Could not find note #{arguments first}" )
   )
   
   done = method(arguments,
     note = NoteCollection find(arguments first)
     if(note,
       note done
-      note toText,
+      note,
       
-      "Could not find note #{arguments first}" ) println
+      "Could not find note #{arguments first}" )
   )
   
   help = method(arguments,
-    Help println
+    Help usage
   )
   
   list = method(arguments,
@@ -35,22 +35,21 @@ DndController = CommandController mimic do(
     if(note,
       note tag = arguments second
       note save
-      note toText,
+      note,
       
-      "Could not find note #{arguments first}" ) println
+      "Could not find note #{arguments first}" )
   )
 
   pass = macro(
-    "Unknown command #{call message name}" println
-    help
+    Help failure("Unknown command #{call message name}")
   )
   
   take = method(arguments,
     note = NoteCollection find(arguments first)
     if(note,
       note take
-      note toText,
+      note,
       
-      "Could not find note #{arguments first}" ) println
+      "Could not find note #{arguments first}" )
   )
 )

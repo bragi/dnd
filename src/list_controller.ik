@@ -1,20 +1,21 @@
 ListController = CommandController mimic do(
-  viewCollection = method(collection, collection each(toText println))
+  active = method(arguments, NoteCollection active)
   
-  active = method(arguments, viewCollection(NoteCollection active))
-  
-  all = method(arguments, viewCollection(NoteCollection all))
+  all = method(arguments, NoteCollection all)
 
-  created = method(arguments, viewCollection(NoteCollection created))
+  created = method(arguments, NoteCollection created)
   
   defaultCommand = method(arguments, created(arguments))
   
-  deleted = method(arguments, viewCollection(NoteCollection deleted))
+  deleted = method(arguments, NoteCollection deleted)
   
-  done = method(arguments, viewCollection(NoteCollection done))
+  done = method(arguments, NoteCollection done)
 
   pass = macro(
-    "Unknown list #{call message name}" println
-    Help println
+    Help failure("Unknown list #{call message name}")
+  )
+  
+  view = method(model,
+    model map(toText) join("\n") println
   )
 )
