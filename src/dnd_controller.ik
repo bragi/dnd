@@ -1,4 +1,15 @@
+use("command_controller")
+use("list_controller")
 DndController = CommandController mimic do(
+  View = CommandController View mimic do(
+    help = method(
+      "Use one of the following commands:
+add    - add new note
+delete - deletes existing note
+help   - prints this help
+list   - lists notes"
+    )
+  )
 
   add = method(arguments,
     note = Note mimic(text: arguments first, tag: arguments second) save
@@ -7,49 +18,30 @@ DndController = CommandController mimic do(
   
   delete = method(arguments,
     note = NoteCollection find(arguments first)
-    if(note,
-      note delete
-      note,
-      
-      "Could not find note #{arguments first}" )
+    note delete
+    note
   )
   
   done = method(arguments,
     note = NoteCollection find(arguments first)
-    if(note,
-      note done
-      note,
-      
-      "Could not find note #{arguments first}" )
+    note done
+    note
   )
   
-  help = method(arguments,
-    Help usage
-  )
+  help = method(arguments, .)
   
-  list = method(arguments,
-    ListController route(arguments))
+  list = chain(ListController)
     
   move = method(arguments,
     note = NoteCollection find(arguments first)
-    if(note,
-      note tag = arguments second
-      note save
-      note,
-      
-      "Could not find note #{arguments first}" )
+    note tag = arguments second
+    note save
+    note
   )
 
-  pass = macro(
-    Help failure("Unknown command #{call message name}")
-  )
-  
   take = method(arguments,
     note = NoteCollection find(arguments first)
-    if(note,
-      note take
-      note,
-      
-      "Could not find note #{arguments first}" )
+    note take
+    note
   )
 )

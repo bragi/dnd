@@ -1,4 +1,6 @@
-NoteCollection = Origin mimic 
+NoteCollection = Origin mimic
+
+NoteCollection RecordNotFound = Condition Error mimic
 
 NoteCollection do(
   selectByState = method(
@@ -26,10 +28,11 @@ NoteCollection do(
   [:created, :deleted, :done] each(state,
     NoteCollection cell(state)= selectByState
   )
+  
   database = method(Database mimic(Note attributes))
   
   find = method(findId,
-    all select(id == findId) first
+    all select(id == findId) first || error!(RecordNotFound mimic("Could not find note with id: #{findId}"))
   )
   
   maxId = method(

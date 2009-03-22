@@ -8,4 +8,4 @@ use("command_controller")
 use("list_controller")
 use("dnd_controller")
 
-DndController mimic route(System programArguments)
+DndController mimic process(System programArguments)
