@@ -9,39 +9,48 @@ CommandController = Origin mimic do(
     )
   )
   
-  chain = method(nextController,
-    fnx(arguments,
-      nextController mimic route(arguments)
-    )
-  )
-  
   defaultCommand = macro(error!(CommandController Error UnknownCommand))
   
   initialize = method(
-    self view = View mimic
     self flash = nil
+    self model = nil
     self result = 0
+    self template = :default
+    self view = self View mimic
   )
   
-  pass = macro(error!(CommandController Error UnknownCommand))
-  
   process = method(arguments,
-    self template = arguments first
     bind(
       rescue(Condition Error,
         fn(c, view error(c, arguments))
       )
-      view model = route(arguments)
-      view send(template) println
-      return(result)
+      controller = route(arguments)
+      view = controller view
+      logger debug(controller asText)
+      logger debug(controller view asText)
+      logger debug(controller model asText)
+      view model = controller model
+      view send(controller template) println
+      System exit(controller result)
     )
   )
   
   route = method(arguments,
-    if(arguments length == 0,
-      defaultCommand(arguments),
-      send(arguments first, arguments rest)
+    controller = self
+    action = arguments first
+    arguments = arguments rest
+    controller template = arguments first
+    
+    if(action && controller cell?(action) && controller cell(action) kind?("CommandController"),
+      controller = controller cell(action) route(arguments),
+      
+      controller model = if(action,
+        controller send(action, arguments),
+        
+        controller defaultCommand(arguments)
+      )
     )
+    controller
   )
 )
 

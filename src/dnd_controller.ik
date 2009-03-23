@@ -1,5 +1,6 @@
 use("command_controller")
 use("list_controller")
+
 DndController = CommandController mimic do(
   View = CommandController View mimic do(
     help = method(
@@ -30,7 +31,7 @@ list   - lists notes"
   
   help = method(arguments, .)
   
-  list = chain(ListController)
+  list = ListController mimic
     
   move = method(arguments,
     note = NoteCollection find(arguments first)

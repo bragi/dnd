@@ -26,10 +26,4 @@ list done    - done notes
   deleted = method(arguments, NoteCollection deleted)
   
   done = method(arguments, NoteCollection done)
-
-  pass = macro(
-    self flash = "Unknown command #{arguments first}"
-    self template = :help
-    nil
-  )
 )
