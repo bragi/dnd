@@ -16,7 +16,7 @@ CommandController = Origin mimic do(
     self model = nil
     self result = 0
     self template = :default
-    self view = self View mimic
+    self view = View mimic
   )
   
   process = method(arguments,
@@ -26,9 +26,10 @@ CommandController = Origin mimic do(
       )
       controller = route(arguments)
       view = controller view
-      logger debug(controller asText)
-      logger debug(controller view asText)
-      logger debug(controller model asText)
+      logger debug(controller)
+      logger debug(controller view)
+      logger debug(controller model)
+      logger debug(controller template)
       view model = controller model
       view send(controller template) println
       System exit(controller result)
@@ -39,7 +40,7 @@ CommandController = Origin mimic do(
     controller = self
     action = arguments first
     arguments = arguments rest
-    controller template = arguments first
+    controller template = arguments first || :default
     
     if(action && controller cell?(action) && controller cell(action) kind?("CommandController"),
       controller = controller cell(action) route(arguments),

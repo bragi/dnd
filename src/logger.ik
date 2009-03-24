@@ -7,7 +7,7 @@ Logger = Origin mimic do(
   
   talk = macro(
     macro(
-      out println(call arguments first evaluateOn(call ground))
+      out println("#{call arguments first}: #{call arguments first evaluateOn(call ground)}")
     )
   )
   
