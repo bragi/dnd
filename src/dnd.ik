@@ -11,6 +11,6 @@ use("dnd_controller")
 use("call_inspector")
 use("text_extensions")
 
-CallInspector instrument(NoteCollection, CommandController, CommandController View)
+;CallInspector instrument(NoteCollection, CommandController, CommandController View)
 
 DndController mimic process(System programArguments)

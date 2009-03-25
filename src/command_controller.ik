@@ -1,14 +1,10 @@
-CommandController = Origin mimic do(
-  View = Origin mimic do(
-    pass = macro(
-      model println
-    )
-    
-    error = method(condition, arguments,
-      "Error #{condition}, arguments: #{arguments}"
-    )
-  )
-  
+CommandController = Origin mimic 
+
+CommandController Error = Condition Error mimic
+CommandController Error UnknownCommand = CommandController Error mimic
+
+CommandController do(
+
   defaultCommand = macro(error!(CommandController Error UnknownCommand))
   
   initialize = method(
@@ -16,7 +12,6 @@ CommandController = Origin mimic do(
     self model = nil
     self result = 0
     self template = :default
-    self view = View mimic
   )
   
   process = method(arguments,
@@ -25,13 +20,13 @@ CommandController = Origin mimic do(
         fn(c, view error(c, arguments))
       )
       controller = route(arguments)
-      view = controller view
-      logger debug(controller)
-      logger debug(controller view)
-      logger debug(controller model)
-      logger debug(controller template)
+      view = (controller cell?(:view) && controller view) || controller View mimic
       view model = controller model
-      view send(controller template) println
+      template = controller template || :default
+      unless(view cell?(template),
+        template = :default
+      )
+      view send(template) println
       System exit(controller result)
     )
   )
@@ -40,7 +35,7 @@ CommandController = Origin mimic do(
     controller = self
     action = arguments first
     arguments = arguments rest
-    controller template = arguments first || :default
+    controller template = action
     
     if(action && controller cell?(action) && controller cell(action) kind?("CommandController"),
       controller = controller cell(action) route(arguments),
@@ -55,5 +50,12 @@ CommandController = Origin mimic do(
   )
 )
 
-CommandController Error = Condition Error mimic
-CommandController Error UnknownCommand = CommandController Error mimic
+CommandController View = Origin mimic do(
+  default = macro(
+    model
+  )
+  
+  error = method(condition, arguments,
+    "Error #{condition}, arguments: #{arguments}"
+  )
+)

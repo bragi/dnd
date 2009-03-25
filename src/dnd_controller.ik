@@ -2,16 +2,6 @@ use("command_controller")
 use("list_controller")
 
 DndController = CommandController mimic do(
-  View = CommandController View mimic do(
-    help = method(
-      "Use one of the following commands:
-add    - add new note
-delete - deletes existing note
-help   - prints this help
-list   - lists notes"
-    )
-  )
-
   add = method(arguments,
     note = Note mimic(text: arguments first, tag: arguments second) save
     note
@@ -29,7 +19,7 @@ list   - lists notes"
     note
   )
   
-  help = method(arguments, .)
+  help = macro()
   
   list = ListController mimic
     
@@ -46,3 +36,13 @@ list   - lists notes"
     note
   )
 )
+
+DndController View = CommandController View mimic do(
+    help = method(
+      "Use one of the following commands:
+add    - add new note
+delete - deletes existing note
+help   - prints this help
+list   - lists notes"
+    )
+  )
