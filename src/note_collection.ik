@@ -25,7 +25,7 @@ NoteCollection do(
     )
   )
   
-  [:created, :deleted, :done] each(state,
+  [:created, :deleted, :done, :taken] each(state,
     NoteCollection cell(state)= selectByState
   )
   

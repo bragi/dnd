@@ -6,7 +6,9 @@ ListController = CommandController mimic do(
 
   created = method(arguments, NoteCollection created)
   
-  defaultCommand = method(arguments, created(arguments))
+  defaultCommand = method(arguments, 
+    self template = "dashboard"
+  )
   
   deleted = method(arguments, NoteCollection deleted)
   
@@ -17,7 +19,11 @@ ListController = CommandController mimic do(
 
 ListController View = CommandController View mimic do(
   default = method(
-    model map(toText) join("\n")
+    if(model empty?,
+      "No tasks added",
+      
+      model map(toText) join("\n")
+    )
   )
   
   help = method(
@@ -28,5 +34,23 @@ list all     - all created notes (including deleted)
 list created - only new notes
 list deleted - deleted notes
 list done    - done notes"
+  )
+  
+  dashboard = method(
+    screen = []
+    if(NoteCollection taken empty?,
+      screen << "No current tasks",
+      
+      screen << "Taken tasks:"
+      NoteCollection taken map(toText) join("\n")
+    )
+    
+    if(NoteCollection created empty?,
+      screen << "No tasks added",
+      
+      screen << "Available tasks"
+      screen << NoteCollection created map(toText) join("\n")
+    )
+    screen join("\n")
   )
 )
