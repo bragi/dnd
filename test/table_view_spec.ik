@@ -8,10 +8,10 @@ describe(TableView,
     table column("name", align: :left)
     table row(1, "apple")
     table row(2, "orange")
-    table asText should == " id | name  
-----+---------
+    table asText should == " id | name   
+----+--------
   1 | apple  
-  2 | orange  "
+  2 | orange "
   )
 )
 
