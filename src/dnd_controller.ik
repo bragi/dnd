@@ -38,11 +38,11 @@ DndController = CommandController mimic do(
 )
 
 DndController View = CommandController View mimic do(
-    help = method(
-      "Use one of the following commands:
+  help = method(
+    "Use one of the following commands:
 add    - add new note
 delete - deletes existing note
 help   - prints this help
 list   - lists notes"
-    )
   )
+)

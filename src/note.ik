@@ -39,7 +39,7 @@ Note = Origin mimic do(
     [id, text, state, tag] join(separator)
   )
     
-  toText = method(
+  asText = method(
     "#{id}:\t #{text}\t (#{tag}, #{state})"
   )
     
