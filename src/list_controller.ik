@@ -1,19 +1,18 @@
 use("table_view")
-ListController = CommandController mimic do(
+ListController = CommandController mimic 
+ListController do(
 
-  active = method(arguments, NoteCollection active)
-
-  all = method(arguments, NoteCollection all)
-
-  created = method(arguments, NoteCollection created)
+  collectionByName = method(name,
+    lecro(NoteCollection cell(name))
+  )
+  
+  [:active, :all, :created, :deleted, :done, :taken] each(action,
+    ListController cell(action) = collectionByName(action)
+  )
 
   defaultCommand = method(arguments,
     self template = "dashboard"
   )
-
-  deleted = method(arguments, NoteCollection deleted)
-
-  done = method(arguments, NoteCollection done)
 
   help = macro()
 )
@@ -43,13 +42,13 @@ list done    - done notes"
       screen << "No current tasks",
 
       screen << "Taken tasks:"
-      NoteCollection taken mimic!(ListController CollectionPresenter) toText
+      screen << NoteCollection taken mimic!(ListController CollectionPresenter) toText
     )
 
     if(NoteCollection created empty?,
-      screen << "No tasks added",
+      screen << "\nNo tasks added",
 
-      screen << "Available tasks"
+      screen << "\nAvailable tasks"
       screen << NoteCollection created mimic!(ListController CollectionPresenter) toText
     )
     screen join("\n")

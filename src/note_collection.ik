@@ -3,8 +3,8 @@ NoteCollection = Origin mimic
 NoteCollection RecordNotFound = Condition Error mimic
 
 NoteCollection do(
-  selectByState = method(
-    macro(all select(state == call message name))
+  selectByState = method(name,
+    lecro(all select(state == name))
   )
 
   add = method(note,
@@ -26,7 +26,7 @@ NoteCollection do(
   )
   
   [:created, :deleted, :done, :taken] each(state,
-    NoteCollection cell(state)= selectByState
+    NoteCollection cell(state)= selectByState(state)
   )
   
   database = method(Database mimic(Note attributes))
