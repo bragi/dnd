@@ -1,3 +1,4 @@
+use("table_view")
 ListController = CommandController mimic do(
 
   active = method(arguments, NoteCollection active)
@@ -22,7 +23,7 @@ ListController View = CommandController View mimic do(
     if(model empty?,
       "No tasks added",
 
-      model map(asText) join("\n")
+      model mimic!(ListController CollectionPresenter) toText
     )
   )
 
@@ -42,15 +43,27 @@ list done    - done notes"
       screen << "No current tasks",
 
       screen << "Taken tasks:"
-      NoteCollection taken map(asText) join("\n")
+      NoteCollection taken mimic!(ListController CollectionPresenter) toText
     )
 
     if(NoteCollection created empty?,
       screen << "No tasks added",
 
       screen << "Available tasks"
-      screen << NoteCollection created map(asText) join("\n")
+      screen << NoteCollection created mimic!(ListController CollectionPresenter) toText
     )
     screen join("\n")
+  )
+)
+
+ListController CollectionPresenter = Origin mimic do(
+  toText = method(
+    table = TableView mimic
+    table column("Id", align: :right)
+    table column("Note")
+    table column("Project")
+    table column("State")
+    each(note, table row(note id, note text, note tag, note state))
+    table asText
   )
 )

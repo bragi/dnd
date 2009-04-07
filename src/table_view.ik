@@ -11,7 +11,7 @@ TableView do(
     rows << []
   )
   
-  column = method(name, align: :right,
+  column = method(name, align: :left,
     column = Column mimic(align: align)
     c = Cell mimic(name, column)
     rows first << c

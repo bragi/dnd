@@ -4,8 +4,8 @@ use("table_view")
 describe(TableView,
   it("renders simple table",
     table = TableView mimic
-    table column("id")
-    table column("name", align: :left)
+    table column("id", align: :right)
+    table column("name")
     table row(1, "apple")
     table row(2, "orange")
     table asText should == " id | name   
