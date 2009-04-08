@@ -1,5 +1,5 @@
 use("ispec")
-use("controller/dnd_controller")
+use("controllers/dnd_controller")
 describe(DndController,
   it("uses ListController to handle list command",
     let(ListController defaultCommand, macro(self result = 77),

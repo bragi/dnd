@@ -1,6 +1,3 @@
-use("controller/command_controller")
-use("controller/list_controller")
-
 DndController = CommandController mimic do(
   add = method(arguments,
     note = Note mimic(text: arguments first, tag: arguments second) save
