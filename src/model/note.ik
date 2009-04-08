@@ -27,9 +27,9 @@ Note = Origin mimic do(
   
   save = method(
     if(savedRecord,
-      NoteCollection saveAll,
+      Notes saveAll,
       
-      NoteCollection add(self)
+      Notes add(self)
     )
   )
   

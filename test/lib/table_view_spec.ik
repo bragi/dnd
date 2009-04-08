@@ -1,5 +1,5 @@
 use("ispec")
-use("table_view")
+use("lib/table_view")
 
 describe(TableView,
   it("renders simple table",

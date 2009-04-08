@@ -1,6 +1,6 @@
 use("ispec")
-use("database")
-use("note")
+use("model/database")
+use("model/note")
 
 describe(Note,
   describe("when creating",

@@ -1,4 +1,4 @@
-use("builtin_extensions")
+use("lib/builtin_extensions")
 
 Database = Origin mimic do(
   all = method(

@@ -1,5 +1,5 @@
 use("ispec")
-use("database")
+use("model/database")
 
 describe(Database Entry,
   it("has Dict representation",

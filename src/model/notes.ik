@@ -1,8 +1,8 @@
-NoteCollection = Origin mimic
+Notes = Origin mimic
 
-NoteCollection RecordNotFound = Condition Error mimic
+Notes RecordNotFound = Condition Error mimic
 
-NoteCollection do(
+Notes do(
   selectByState = method(name,
     lecro(all select(state == name))
   )
@@ -26,7 +26,7 @@ NoteCollection do(
   )
   
   [:created, :deleted, :done, :taken] each(state,
-    NoteCollection cell(state)= selectByState(state)
+    Notes cell(state)= selectByState(state)
   )
   
   database = method(Database mimic(Note attributes))

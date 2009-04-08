@@ -1,5 +1,5 @@
-use("command_controller")
-use("list_controller")
+use("controller/command_controller")
+use("controller/list_controller")
 
 DndController = CommandController mimic do(
   add = method(arguments,
@@ -8,13 +8,13 @@ DndController = CommandController mimic do(
   )
 
   delete = method(arguments,
-    note = NoteCollection find(arguments first)
+    note = Notes find(arguments first)
     note delete
     note
   )
 
   done = method(arguments,
-    note = NoteCollection find(arguments first)
+    note = Notes find(arguments first)
     note done
     note
   )
@@ -24,14 +24,14 @@ DndController = CommandController mimic do(
   list = ListController mimic
 
   move = method(arguments,
-    note = NoteCollection find(arguments first)
+    note = Notes find(arguments first)
     note tag = arguments second
     note save
     note
   )
 
   take = method(arguments,
-    note = NoteCollection find(arguments first)
+    note = Notes find(arguments first)
     note take
     note
   )

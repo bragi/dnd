@@ -1,9 +1,9 @@
-use("table_view")
+use("lib/table_view")
 ListController = CommandController mimic 
 ListController do(
 
   collectionByName = method(name,
-    lecro(NoteCollection cell(name))
+    lecro(Notes cell(name))
   )
   
   [:active, :all, :created, :deleted, :done, :taken] each(action,
@@ -38,18 +38,18 @@ list done    - done notes"
 
   dashboard = method(
     screen = []
-    if(NoteCollection taken empty?,
+    if(Notes taken empty?,
       screen << "No current tasks",
 
       screen << "Taken tasks:"
-      screen << NoteCollection taken mimic!(ListController CollectionPresenter) toText
+      screen << Notes taken mimic!(ListController CollectionPresenter) toText
     )
 
-    if(NoteCollection created empty?,
+    if(Notes created empty?,
       screen << "\nNo tasks added",
 
       screen << "\nAvailable tasks"
-      screen << NoteCollection created mimic!(ListController CollectionPresenter) toText
+      screen << Notes created mimic!(ListController CollectionPresenter) toText
     )
     screen join("\n")
   )

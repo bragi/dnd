@@ -1,4 +1,4 @@
-use("logger")
+use("lib/logger")
 
 debugMessage = "Debug referenced message"
 infoMessage = "Info referenced message"
