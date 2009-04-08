@@ -63,7 +63,7 @@ ListController CollectionPresenter = Origin mimic do(
     table column("Note")
     table column("Project")
     table column("State")
-    each(note, table row(note id, note text, note tag, note state))
+    each(note, table row(note id, note text, note project, note state))
     table asText
   )
 )

@@ -1,5 +1,5 @@
 Note = Origin mimic do(
-  attributes = [:id, :text, :state, :tag, :savedRecord]
+  attributes = [:id, :text, :state, :project, :savedRecord]
   
   updateAttributeMethod = method(attribute, value,
     lecro(
@@ -22,7 +22,7 @@ Note = Origin mimic do(
       self cell(attribute) = newAttributes[attribute]
     )
     self state ||= "created"
-    self tag ||= "inbox"
+    self project ||= "inbox"
   )
   
   save = method(
@@ -36,11 +36,11 @@ Note = Origin mimic do(
   take = updateStateMethod("taken")
 
   toDatabase = method(separator ",",
-    [id, text, state, tag] join(separator)
+    [id, text, state, project] join(separator)
   )
     
   asText = method(
-    "#{id}:\t #{text}\t (#{tag}, #{state})"
+    "#{id}:\t #{text}\t (#{project}, #{state})"
   )
     
 )

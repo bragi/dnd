@@ -1,6 +1,6 @@
 DndController = CommandController mimic do(
   add = method(arguments,
-    note = Note mimic(text: arguments first, tag: arguments second) save
+    note = Note mimic(text: arguments first, project: arguments second) save
     note
   )
 
@@ -22,7 +22,7 @@ DndController = CommandController mimic do(
 
   move = method(arguments,
     note = Notes find(arguments first)
-    note tag = arguments second
+    note project = arguments second
     note save
     note
   )
@@ -44,15 +44,16 @@ DndController View = CommandController View mimic do(
 add    - add new note
 delete - deletes existing note
 help   - prints this help
-list   - lists notes"
+list   - lists notes
+move   - move note to another project"
   )
 )
 
 DndController NotePresenter = Origin mimic do(
   toText = method(
-    "Id:    #{id}
-Note:  #{text}
-Inbox: #{tag}
-State: #{state}"
+    "Id:      #{id}
+Note:    #{text}
+Project: #{project}
+State:   #{state}"
   )
 )
