@@ -1,12 +1,12 @@
 use("lib/table_view")
 
-ListController = CommandController mimic 
+ListController = CommandController mimic
 ListController do(
 
   collectionByName = method(name,
     lecro(Notes cell(name))
   )
-  
+
   [:active, :all, :created, :deleted, :done, :taken] each(action,
     ListController cell(action) = collectionByName(action)
   )
@@ -60,10 +60,9 @@ ListController CollectionPresenter = Origin mimic do(
   toText = method(
     table = TableView mimic
     table column("Id", align: :right)
-    table column("Note")
     table column("Project")
-    table column("State")
-    each(note, table row(note id, note text, note project, note state))
+    table column("Note")
+    each(note, table row(note id, note project, note text))
     table asText
   )
 )

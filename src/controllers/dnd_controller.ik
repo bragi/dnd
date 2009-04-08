@@ -53,7 +53,6 @@ DndController NotePresenter = Origin mimic do(
   toText = method(
     "Id:      #{id}
 Note:    #{text}
-Project: #{project}
-State:   #{state}"
+Project: #{project}"
   )
 )
