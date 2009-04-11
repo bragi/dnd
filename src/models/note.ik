@@ -1,12 +1,21 @@
 Note = Origin mimic do(
   attributes = [:id, :text, :state, :project, :savedRecord]
   
+  asText = method(
+    "#{id}:\t #{text}\t (#{project}, #{state})"
+  )
+
   updateAttributeMethod = method(attribute, value,
     lecro(
       target = call receiver
       target cell(attribute) = value
       target save
     )
+  )
+  
+  updateAttribute = method(attribute, value,
+    self cell(attribute) = value
+    save
   )
   
   updateStateMethod = method(value,
@@ -38,9 +47,4 @@ Note = Origin mimic do(
   toDatabase = method(separator ",",
     [id, text, state, project] join(separator)
   )
-    
-  asText = method(
-    "#{id}:\t #{text}\t (#{project}, #{state})"
-  )
-    
 )

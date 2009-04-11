@@ -15,6 +15,12 @@ DndController = CommandController mimic do(
     note done
     note
   )
+  
+  edit = method(arguments,
+    note = Notes find(arguments first)
+    note updateAttribute("text", arguments last)
+    note
+  )
 
   help = macro()
 
@@ -43,6 +49,7 @@ DndController View = CommandController View mimic do(
     "Use one of the following commands:
 add    - add new note
 delete - deletes existing note
+edit   - changes existing note
 help   - prints this help
 list   - lists notes
 move   - move note to another project"
