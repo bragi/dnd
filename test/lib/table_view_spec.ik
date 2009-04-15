@@ -13,6 +13,19 @@ describe(TableView,
   1 | apple  
   2 | orange "
   )
+
+  it("renders table without headers", {pending: true},
+    table = TableView mimic
+    table column(align: :right)
+    table column
+    table row("Id:", 2)
+    table row("Name:", "Apple")
+    table row("State:", "deleted")
+    table rowSeparator = nil
+    table asText should == "   Id: 2
+ Name: Apple
+State: deleted"
+  )
 )
 
 describe(TableView Column,

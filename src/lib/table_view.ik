@@ -7,14 +7,24 @@ TableView do(
 
   initialize = method(
     self columns = []
+    self headers = []
     self rows = []
     rows << []
   )
 
-  column = method(name, align: :left,
+  asText = method(
+    header = headers map(asText) join("|")
+    underline = columns map(asText) join("+")
+    data = (rows rest map(map(asText) join("|"))) join("\n")
+    [header, underline, data] join("\n")
+  )
+
+  column = method(name nil, align: :left,
     column = Column mimic(align: align)
-    c = Cell mimic(name, column)
-    rows first << c
+    if(name,
+      headers << Cell mimic(name, column)
+    )
+
     columns << column
   )
 
@@ -27,12 +37,7 @@ TableView do(
     rows << row
   )
 
-  asText = method(
-    headers = rows first map(asText) join("|")
-    underline = columns map(asText) join("+")
-    data = (rows rest map(map(asText) join("|"))) join("\n")
-    [headers, underline, data] join("\n")
-  )
+  rowSeparator = "|"
 )
 
 TableView Cell do(
@@ -55,6 +60,8 @@ TableView Column do(
     self align = align
     self cs = []
   )
+
   asText = method("-" * (contentWidth + 2))
+
   contentWidth = method(cs map(contentWidth) max)
 )
