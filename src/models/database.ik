@@ -7,28 +7,28 @@ Database = Origin mimic do(
       List mimic
     ) map(data, Entry mimic(columns, data))
   )
-  
+
   createDirectoryIfNeeded = method(
     unless(FileSystem exists?(storageDir),
       FileSystem createDirectory!(storageDir)
     )
   )
-    
+
   databaseExists? = method(
     FileSystem exists?(storageFullPath)
   )
-  
+
   initialize = method(columns,
     self columns = columns
   )
-    
+
   readDatabase = method(
     FileSystem readFully(storageFullPath) split("\1") map(split("\0"))
   )
-    
+
   save = method(collection,
     createDirectoryIfNeeded
-    FileSystem withOpenFile(storageFullPath, 
+    FileSystem withOpenFile(storageFullPath,
       fn(f,
         f print(collection map(toDatabase("\0")) join("\1"))
       )
@@ -49,7 +49,7 @@ Database Entry = Origin mimic do(
     self columns = columns
     self data = data
   )
-  
+
   toDict = method(
     {}() addKeysAndValues(columns, data) merge(savedRecord: true)
   )

@@ -4,20 +4,20 @@ TableView Cell = Origin mimic
 TableView Column = Origin mimic
 
 TableView do(
-  
+
   initialize = method(
     self columns = []
     self rows = []
     rows << []
   )
-  
+
   column = method(name, align: :left,
     column = Column mimic(align: align)
     c = Cell mimic(name, column)
     rows first << c
     columns << column
   )
-  
+
   row = method(+data,
     row = []
     data zip(columns) each(valueColumn,
@@ -26,7 +26,7 @@ TableView do(
     )
     rows << row
   )
-  
+
   asText = method(
     headers = rows first map(asText) join("|")
     underline = columns map(asText) join("+")
@@ -41,12 +41,12 @@ TableView Cell do(
     self column = column
     column cs << self
   )
-  
+
   asText = method(
     sign = if(column align == :left, "-", "")
     " %#{sign}#{column contentWidth}s " % content
   )
-  
+
   contentWidth = method(content length)
 )
 

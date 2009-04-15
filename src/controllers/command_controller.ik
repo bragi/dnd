@@ -1,4 +1,4 @@
-CommandController = Origin mimic 
+CommandController = Origin mimic
 
 CommandController Error = Condition Error mimic
 CommandController Error UnknownCommand = CommandController Error mimic
@@ -6,14 +6,14 @@ CommandController Error UnknownCommand = CommandController Error mimic
 CommandController do(
 
   defaultCommand = macro(error!(CommandController Error UnknownCommand))
-  
+
   initialize = method(
     self flash = nil
     self model = nil
     self result = 0
     self template = :default
   )
-  
+
   process = method(arguments,
     bind(
       rescue(Condition Error,
@@ -30,19 +30,19 @@ CommandController do(
       System exit(controller result)
     )
   )
-  
+
   route = method(arguments,
     controller = self
     action = arguments first
     arguments = arguments rest
     controller template = action
-    
+
     if(action && controller cell?(action) && controller cell(action) kind?("CommandController"),
       controller = controller cell(action) route(arguments),
-      
+
       controller model = if(action,
         controller send(action, arguments),
-        
+
         controller defaultCommand(arguments)
       )
     )
@@ -54,7 +54,7 @@ CommandController View = Origin mimic do(
   default = macro(
     model
   )
-  
+
   error = method(condition, arguments,
     "Error #{condition}, arguments: #{arguments}"
   )

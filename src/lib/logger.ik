@@ -1,23 +1,23 @@
 Logger = Origin mimic do(
   out = System err
-  
+
   ignore = macro(
     macro()
   )
-  
+
   talk = macro(
     macro(
       messageOrCode = call arguments first
-      text = if(messageOrCode kind?("Text"), 
+      text = if(messageOrCode kind?("Text"),
         messageOrCode,
-        
+
         "#{call arguments first}: #{call arguments first evaluateOn(call ground)}"
       )
       out println(text)
       self
     )
   )
-  
+
   level = method(level,
     case(level,
       :info,
@@ -42,7 +42,7 @@ Logger = Origin mimic do(
         self error = talk
     )
   )
-  
+
   level(:debug)
 )
 

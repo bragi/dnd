@@ -10,7 +10,7 @@ CallInspector = Origin mimic do(
     nesting --
     "#{"| " * nesting}\\returned #{aspectResult asText truncate}" println
   )
-  
+
   instrument = method(+objects,
     objects each(object,
       object before(matching: :anyFromSelf) << entering
