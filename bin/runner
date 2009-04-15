@@ -1,0 +1,3 @@
+#!/bin/bash
+
+CP=lib/sqlitejdbc-v054.jar ioke -J-Djdbc.drivers=org.sqlite.JDBC -I src "$@"
