@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ioke -I src -I lib `which ispec` "$@"
