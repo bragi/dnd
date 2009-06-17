@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ioke -I src -I lib `which ispec` "$@"
+ioke -I src -I lib -I ../ioke-couchdb/lib -I ../ioke-couchdb/lib/runtime -I ../ioke-json/lib `which ispec` "$@"
